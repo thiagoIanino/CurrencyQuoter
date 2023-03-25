@@ -19,7 +19,7 @@ namespace CurrencyQuoter.Api.Controllers
             if (currency is null)
                 return BadRequest();
 
-
+            return Ok(currency);
         }
     }
 }
