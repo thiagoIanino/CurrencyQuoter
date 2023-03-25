@@ -21,9 +21,13 @@ namespace CurrencyQuoter.Application.Mappers
                 var quoteDate = timestamps.ElementAt(i).ToDateTime();
                 var price = prices.ElementAt(i);
 
-                currencyQuotes.Add(new CurrencyQuote { Currency = "",Value = price, QuoteDate = quoteDate});
+                currencyQuotes.Add(new CurrencyQuote {
+                    Currency = "",
+                    Value = Math.Round(price,4),
+                    QuoteDate = quoteDate
+                });
             }
-            return currencyQuotes;
+            return currencyQuotes.OrderBy(c => c.QuoteDate).ToList(); ;
         }
     }
 }

@@ -15,6 +15,8 @@ namespace CurrencyQuoter.Domain.Parameters
         public static class Exception
         {
             public static string InvalidRequestParameter => "Invalid parameter";
+            public static string GerenalCurrencyQuoteError => "Couldn`t calculate the last quotes. ";
+            public static string CurrencyQuoteNotFound => "Currency not found";
         }
     }
 }

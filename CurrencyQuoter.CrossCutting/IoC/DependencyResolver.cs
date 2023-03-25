@@ -10,6 +10,9 @@ namespace CurrencyQuoter.CrossCutting.IoC
         public static void AddDependencyResolver(this IServiceCollection services)
         {
             services.AddDependencyResolverHttpClient();
+            services.AddDependencyResolverApplication();
+            services.AddDependencyResolverService();
+            services.AddDependencyResolverRepository();
         }
     }
 }

@@ -10,18 +10,24 @@ using System.Threading.Tasks;
 
 namespace CurrencyQuoter.Infrastructure.Repositories
 {
-    
+
     public class YahooFinanceRepository : BaseServiceRepository, IYahooFinanceRepository
     {
-
-        private string CURRENT_QUOTE_PATH = "chart/USDBRL=X?interval=1d&range=1mo";
         public YahooFinanceRepository(IHttpClientFactory httpClientFactory) : base(httpClientFactory)
         {
         }
 
         public async Task<CurrencyQuoteDto> GetCurrencyQuotes(string currency)
         {
-            return await Get<CurrencyQuoteDto>(Parameters.YahooFinanceApi.Name, CURRENT_QUOTE_PATH, null, null);
+            try
+            {
+                var path = $"chart/{currency}BRL=X?interval=1d&range=1mo";
+                return await Get<CurrencyQuoteDto>(Parameters.YahooFinanceApi.Name, path, null, null);
+            }
+            catch
+            {
+                throw new Exception(Parameters.Exception.CurrencyQuoteNotFound);
+            }
         }
     }
 }

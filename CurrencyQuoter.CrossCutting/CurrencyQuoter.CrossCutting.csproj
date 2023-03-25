@@ -10,6 +10,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\CurrencyQuoter.Application\CurrencyQuoter.Application.csproj" />
     <ProjectReference Include="..\CurrencyQuoter.Domain\CurrencyQuoter.Domain.csproj" />
     <ProjectReference Include="..\CurrencyQuoter.Infrastructure\CurrencyQuoter.Infrastructure.csproj" />
   </ItemGroup>

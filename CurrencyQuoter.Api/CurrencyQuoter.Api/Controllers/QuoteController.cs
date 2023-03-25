@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using CurrencyQuoter.Application.Interfaces;
+using Microsoft.AspNetCore.Mvc;
 using System.Threading.Tasks;
 
 namespace CurrencyQuoter.Api.Controllers
@@ -7,9 +8,10 @@ namespace CurrencyQuoter.Api.Controllers
     [Route("quotes")]
     public class QuoteController : ControllerBase
     {
-        public QuoteController()
+        private readonly ICurrencyQuoteApplication _currencyQuoteApplication;
+        public QuoteController(ICurrencyQuoteApplication currencyQuoteApplication)
         {
-            
+            _currencyQuoteApplication = currencyQuoteApplication;
         }
 
         [HttpGet]
@@ -19,7 +21,9 @@ namespace CurrencyQuoter.Api.Controllers
             if (currency is null)
                 return BadRequest();
 
-            return Ok(currency);
+            var currencyQuote = await _currencyQuoteApplication.GetCurrencyQuotesValues(currency);
+
+            return Ok(currencyQuote);
         }
     }
 }

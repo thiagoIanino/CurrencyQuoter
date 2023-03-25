@@ -5,6 +5,11 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <PackageReference Include="Swashbuckle.AspNetCore" Version="6.5.0" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\..\CurrencyQuoter.Application\CurrencyQuoter.Application.csproj" />
     <ProjectReference Include="..\..\CurrencyQuoter.CrossCutting\CurrencyQuoter.CrossCutting.csproj" />
   </ItemGroup>
 
