@@ -6,6 +6,7 @@ using CurrencyQuoter.Domain.Parameters;
 using CurrencyQuoter.Domain.Repositories;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -25,11 +26,16 @@ namespace CurrencyQuoter.Application
         {
             try
             {
-                var quotes = await _yahooFinanceRepository.GetCurrencyQuotes(currency);
+                var quotes = (await _yahooFinanceRepository.GetCurrencyQuotes(currency)).ToCurrencyQuoteList();
+                var registeredQuotes = await _domainCurrencyQuoteService.GetRegisteredQuotes(quotes,currency);
 
-                var calculatedQuotes = _domainCurrencyQuoteService.CalculateVariancePercentage(quotes.ToCurrencyQuoteList());
+                var newQuotes = _domainCurrencyQuoteService.GetNewQuotes(registeredQuotes, quotes);
 
-                return calculatedQuotes;
+                var calculatedQuotes = _domainCurrencyQuoteService.CalculateVariancePercentage(newQuotes);
+
+                _ = _domainCurrencyQuoteService.UpdadteCurrenyQuotes(registeredQuotes, calculatedQuotes);
+
+                return quotes;
             }
             catch(Exception ex)
             {
