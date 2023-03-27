@@ -45,43 +45,46 @@ namespace CurrencyQuoter.Domain.Services
             return Math.Round(percentage, 2);
         }
 
-        public async Task<Dictionary<string, List<CurrencyQuote>>> GetRegisteredQuotes(List<CurrencyQuote> currencyQuotes, string currency)
+        public async Task<Dictionary<int, List<CurrencyQuote>>> GetRegisteredQuotes(List<CurrencyQuote> currencyQuotes, string currency)
         {
-            var registeredQuotes = new Dictionary<string, List<CurrencyQuote>>();
+            var registeredQuotes = new Dictionary<int, List<CurrencyQuote>>();
             var groupedDates = new Dictionary<int, int>();
-            currencyQuotes.Select(x => groupedDates.TryAdd(x.QuoteDate.Month, x.QuoteDate.Year));
+            currencyQuotes.ForEach(x => groupedDates.TryAdd(x.QuoteDate.Month, x.QuoteDate.Year));
 
             foreach (var groupedDate in groupedDates)
             {
                 var key = $"{currency}-{groupedDate.Key}-{groupedDate.Value}";
-                var quotes = (await _redisRepository.ObterObjetoAssincrono<IEnumerable<CurrencyQuote>>(key)).ToList();
-                registeredQuotes.TryAdd(key, quotes);
+                var quotes = (await _redisRepository.ObterObjetoAssincrono<IEnumerable<CurrencyQuote>>(key))?.ToList() ?? new List<CurrencyQuote>();
+                registeredQuotes.TryAdd(groupedDate.Key, quotes);
             }
+
             return registeredQuotes;
         }
 
-        public async Task UpdadteCurrenyQuotes(Dictionary<string, List<CurrencyQuote>> registeredQuotes, List<CurrencyQuote> newQuotes)
+        public async Task UpdadteCurrenyQuotes(Dictionary<int, List<CurrencyQuote>> registeredQuotes, List<CurrencyQuote> newQuotes)
         {
             foreach (var registeredQuote in registeredQuotes)
             {
-                var month = registeredQuote.Value.FirstOrDefault().QuoteDate.Month;
+                var month = registeredQuote.Key;
 
                 foreach (var newQuote in newQuotes)
                 {
                     if (newQuote.QuoteDate.Month == month)
                         registeredQuote.Value.Add(newQuote);
                 }
-
-                await _redisRepository.SalvarObjetoAssincrono<IEnumerable<CurrencyQuote>>( registeredQuote.Value, registeredQuote.Key,null);
+                var currency = registeredQuote.Value.FirstOrDefault().Currency;
+                var quoteYear = registeredQuote.Value.FirstOrDefault().QuoteDate.Year;
+                var key = $"{currency}-{registeredQuote.Key}-{quoteYear}";
+                await _redisRepository.SalvarObjetoAssincrono<IEnumerable<CurrencyQuote>>( registeredQuote.Value, key, null);
             }
         }
 
-        public List<CurrencyQuote> GetNewQuotes(Dictionary<string, List<CurrencyQuote>> registeredQuotes, List<CurrencyQuote> quotes)
+        public List<CurrencyQuote> GetNewQuotes(Dictionary<int, List<CurrencyQuote>> registeredQuotes, List<CurrencyQuote> quotes)
         {
             var newQuotes = new List<CurrencyQuote>();
             foreach (var registeredQuote in registeredQuotes)
             {
-                var month = registeredQuote.Value.FirstOrDefault().QuoteDate.Month;
+                var month = registeredQuote.Key;
                 foreach (var quote in quotes)
                 {
                     if (quote.QuoteDate.Month == month && !registeredQuote.Value.Any(x => x.QuoteDate.Day == quote.QuoteDate.Day))

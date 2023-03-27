@@ -30,7 +30,7 @@ namespace CurrencyQuoter.Application
                 var quotes = (await _yahooFinanceRepository.GetCurrencyQuotes(upperCaseCurrency)).ToCurrencyQuoteList(upperCaseCurrency);
 
                 var calculatedQuotes = _domainCurrencyQuoteService.CalculateVariancePercentage(quotes);
-                _ = UpdateNewQuotes(calculatedQuotes, upperCaseCurrency);
+                _ = RegisterNewQuotes(calculatedQuotes, upperCaseCurrency);
 
                 return calculatedQuotes;
             }
@@ -40,7 +40,7 @@ namespace CurrencyQuoter.Application
             }
         }
 
-        private async Task UpdateNewQuotes(List<CurrencyQuote> calculatedQuotes, string currency)
+        private async Task RegisterNewQuotes(List<CurrencyQuote> calculatedQuotes, string currency)
         {
             var registeredQuotes = await _domainCurrencyQuoteService.GetRegisteredQuotes(calculatedQuotes, currency);
             var newQuotes = _domainCurrencyQuoteService.GetNewQuotes(registeredQuotes, calculatedQuotes);

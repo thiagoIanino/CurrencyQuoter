@@ -13,6 +13,7 @@ namespace CurrencyQuoter.CrossCutting.IoC
             services.AddDependencyResolverApplication();
             services.AddDependencyResolverService();
             services.AddDependencyResolverRepository();
+            services.AddDependencyResolverRedis();
         }
     }
 }
