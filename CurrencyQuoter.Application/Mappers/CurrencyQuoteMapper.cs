@@ -10,7 +10,7 @@ namespace CurrencyQuoter.Application.Mappers
 {
     public static class CurrencyQuoteMapper
     {
-        public static List<CurrencyQuote> ToCurrencyQuoteList(this CurrencyQuoteDto currentQuotesDto)
+        public static List<CurrencyQuote> ToCurrencyQuoteList(this CurrencyQuoteDto currentQuotesDto,string currency)
         {
             var currencyQuotes = new List<CurrencyQuote>();
             var prices = currentQuotesDto.Chart.Result.FirstOrDefault().Indicators.Quote.FirstOrDefault().Open;
@@ -22,7 +22,7 @@ namespace CurrencyQuoter.Application.Mappers
                 var price = prices.ElementAt(i);
 
                 currencyQuotes.Add(new CurrencyQuote {
-                    Currency = "",
+                    Currency = currency,
                     Value = Math.Round(price,4),
                     QuoteDate = quoteDate
                 });

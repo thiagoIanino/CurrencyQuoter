@@ -3,15 +3,17 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.5.33516.290
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CurrencyQuoter.Api", "CurrencyQuoter.Api\CurrencyQuoter.Api.csproj", "{9B912970-44EF-4B00-A6F1-98DF48A8D599}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CurrencyQuoter.Api", "CurrencyQuoter.Api\CurrencyQuoter.Api.csproj", "{9B912970-44EF-4B00-A6F1-98DF48A8D599}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CurrencyQuoter.Application", "..\CurrencyQuoter.Application\CurrencyQuoter.Application.csproj", "{EB433347-8A5F-4A96-B29B-C09D8F47880B}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CurrencyQuoter.Application", "..\CurrencyQuoter.Application\CurrencyQuoter.Application.csproj", "{EB433347-8A5F-4A96-B29B-C09D8F47880B}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CurrencyQuoter.Infrastructure", "..\CurrencyQuoter.Infrastructure\CurrencyQuoter.Infrastructure.csproj", "{772CFF25-2C39-489E-BE5D-50861F1DAACB}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CurrencyQuoter.Infrastructure", "..\CurrencyQuoter.Infrastructure\CurrencyQuoter.Infrastructure.csproj", "{772CFF25-2C39-489E-BE5D-50861F1DAACB}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CurrencyQuoter.Domain", "..\CurrencyQuoter.Domain\CurrencyQuoter.Domain.csproj", "{0E706356-AF04-4794-BFB5-7D4524D7CF78}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CurrencyQuoter.Domain", "..\CurrencyQuoter.Domain\CurrencyQuoter.Domain.csproj", "{0E706356-AF04-4794-BFB5-7D4524D7CF78}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CurrencyQuoter.CrossCutting", "..\CurrencyQuoter.CrossCutting\CurrencyQuoter.CrossCutting.csproj", "{A820649C-D203-4AB6-8EDF-EADFB2EA87FC}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CurrencyQuoter.CrossCutting", "..\CurrencyQuoter.CrossCutting\CurrencyQuoter.CrossCutting.csproj", "{A820649C-D203-4AB6-8EDF-EADFB2EA87FC}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CurrencyQuoter.Tests", "..\CurrencyQuoter.Tests\CurrencyQuoter.Tests.csproj", "{C41058A0-3EF1-4D2E-81D3-FA41599F5468}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -39,6 +41,10 @@ Global
 		{A820649C-D203-4AB6-8EDF-EADFB2EA87FC}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{A820649C-D203-4AB6-8EDF-EADFB2EA87FC}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{A820649C-D203-4AB6-8EDF-EADFB2EA87FC}.Release|Any CPU.Build.0 = Release|Any CPU
+		{C41058A0-3EF1-4D2E-81D3-FA41599F5468}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{C41058A0-3EF1-4D2E-81D3-FA41599F5468}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{C41058A0-3EF1-4D2E-81D3-FA41599F5468}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{C41058A0-3EF1-4D2E-81D3-FA41599F5468}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

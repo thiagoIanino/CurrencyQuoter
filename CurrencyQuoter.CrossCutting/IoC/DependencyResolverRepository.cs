@@ -14,6 +14,7 @@ namespace CurrencyQuoter.CrossCutting.IoC
         public static void AddDependencyResolverRepository(this IServiceCollection services)
         {
             services.AddScoped<IYahooFinanceRepository, YahooFinanceRepository>();
+            services.AddScoped<IRedisRepository, RedisRepository>();
         }
     }
 }

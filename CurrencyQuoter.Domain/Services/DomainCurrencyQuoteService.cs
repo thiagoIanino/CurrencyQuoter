@@ -47,15 +47,14 @@ namespace CurrencyQuoter.Domain.Services
 
         public async Task<Dictionary<string, List<CurrencyQuote>>> GetRegisteredQuotes(List<CurrencyQuote> currencyQuotes, string currency)
         {
-            var type = typeof(IEnumerable<CurrencyQuote>);
             var registeredQuotes = new Dictionary<string, List<CurrencyQuote>>();
             var groupedDates = new Dictionary<int, int>();
             currencyQuotes.Select(x => groupedDates.TryAdd(x.QuoteDate.Month, x.QuoteDate.Year));
 
             foreach (var groupedDate in groupedDates)
             {
-                var key = $"{currency.ToUpper()}-{groupedDate.Key}-{groupedDate.Value}";
-                var quotes = (await _redisRepository.GetValue<IEnumerable<CurrencyQuote>>(key)).ToList();
+                var key = $"{currency}-{groupedDate.Key}-{groupedDate.Value}";
+                var quotes = (await _redisRepository.ObterObjetoAssincrono<IEnumerable<CurrencyQuote>>(key)).ToList();
                 registeredQuotes.TryAdd(key, quotes);
             }
             return registeredQuotes;
@@ -73,7 +72,7 @@ namespace CurrencyQuoter.Domain.Services
                         registeredQuote.Value.Add(newQuote);
                 }
 
-                await _redisRepository.Add(registeredQuote.Key, registeredQuote.Value);
+                await _redisRepository.SalvarObjetoAssincrono<IEnumerable<CurrencyQuote>>( registeredQuote.Value, registeredQuote.Key,null);
             }
         }
 

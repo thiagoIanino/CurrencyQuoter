@@ -26,21 +26,26 @@ namespace CurrencyQuoter.Application
         {
             try
             {
-                var quotes = (await _yahooFinanceRepository.GetCurrencyQuotes(currency)).ToCurrencyQuoteList();
-                var registeredQuotes = await _domainCurrencyQuoteService.GetRegisteredQuotes(quotes,currency);
+                var upperCaseCurrency = currency.ToUpper();
+                var quotes = (await _yahooFinanceRepository.GetCurrencyQuotes(upperCaseCurrency)).ToCurrencyQuoteList(upperCaseCurrency);
 
-                var newQuotes = _domainCurrencyQuoteService.GetNewQuotes(registeredQuotes, quotes);
+                var calculatedQuotes = _domainCurrencyQuoteService.CalculateVariancePercentage(quotes);
+                _ = UpdateNewQuotes(calculatedQuotes, upperCaseCurrency);
 
-                var calculatedQuotes = _domainCurrencyQuoteService.CalculateVariancePercentage(newQuotes);
-
-                _ = _domainCurrencyQuoteService.UpdadteCurrenyQuotes(registeredQuotes, calculatedQuotes);
-
-                return quotes;
+                return calculatedQuotes;
             }
             catch(Exception ex)
             {
                 throw new Exception(Parameters.Exception.GerenalCurrencyQuoteError + ex.Message);
             }
+        }
+
+        private async Task UpdateNewQuotes(List<CurrencyQuote> calculatedQuotes, string currency)
+        {
+            var registeredQuotes = await _domainCurrencyQuoteService.GetRegisteredQuotes(calculatedQuotes, currency);
+            var newQuotes = _domainCurrencyQuoteService.GetNewQuotes(registeredQuotes, calculatedQuotes);
+
+            await _domainCurrencyQuoteService.UpdadteCurrenyQuotes(registeredQuotes, newQuotes);
         }
     }
 }

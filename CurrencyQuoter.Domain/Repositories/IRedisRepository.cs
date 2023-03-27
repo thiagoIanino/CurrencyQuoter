@@ -7,7 +7,7 @@ namespace CurrencyQuoter.Domain.Repositories
 {
     public interface IRedisRepository
     {
-        Task<T> GetValue<T>(string key);
-        Task Add<T>(string key, T value);
+        Task SalvarObjetoAssincrono<T>(T valor, string chave, TimeSpan? tempoExpiracao);
+        Task<T> ObterObjetoAssincrono<T>(string chave);
     }
 }
