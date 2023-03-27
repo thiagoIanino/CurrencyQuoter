@@ -13,8 +13,8 @@ namespace CurrencyQuoter.Application.Mappers
         public static List<CurrencyQuote> ToCurrencyQuoteList(this CurrencyQuoteDto currentQuotesDto,string currency)
         {
             var currencyQuotes = new List<CurrencyQuote>();
-            var prices = currentQuotesDto.Chart.Result.FirstOrDefault().Indicators.Quote.FirstOrDefault().Open;
-            var timestamps = currentQuotesDto.Chart.Result.FirstOrDefault().Timestamp;
+            var prices = currentQuotesDto?.Chart?.Result?.FirstOrDefault()?.Indicators?.Quote?.FirstOrDefault()?.Open;
+            var timestamps = currentQuotesDto?.Chart?.Result?.FirstOrDefault()?.Timestamp;
 
             for(int i = 0; i < prices.Count; i++)
             {
@@ -27,7 +27,7 @@ namespace CurrencyQuoter.Application.Mappers
                     QuoteDate = quoteDate
                 });
             }
-            return currencyQuotes.OrderBy(c => c.QuoteDate).ToList(); ;
+            return currencyQuotes.OrderBy(c => c?.QuoteDate).ToList(); ;
         }
     }
 }

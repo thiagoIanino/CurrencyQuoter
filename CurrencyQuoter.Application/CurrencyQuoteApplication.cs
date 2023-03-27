@@ -27,7 +27,7 @@ namespace CurrencyQuoter.Application
             try
             {
                 var upperCaseCurrency = currency.ToUpper();
-                var quotes = (await _yahooFinanceRepository.GetCurrencyQuotes(upperCaseCurrency)).ToCurrencyQuoteList(upperCaseCurrency);
+                var quotes = (await _yahooFinanceRepository.GetCurrencyQuotes(upperCaseCurrency))?.ToCurrencyQuoteList(upperCaseCurrency);
 
                 var calculatedQuotes = _domainCurrencyQuoteService.CalculateVariancePercentage(quotes);
                 _ = RegisterNewQuotes(calculatedQuotes, upperCaseCurrency);

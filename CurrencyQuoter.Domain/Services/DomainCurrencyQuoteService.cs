@@ -19,7 +19,7 @@ namespace CurrencyQuoter.Domain.Services
 
         public List<CurrencyQuote> CalculateVariancePercentage(List<CurrencyQuote> currencyQuotes)
         {
-            var firstQuote = currencyQuotes.FirstOrDefault();
+            var firstQuote = currencyQuotes?.FirstOrDefault();
 
             for (var i = 0; i < currencyQuotes.Count; i++)
             {
